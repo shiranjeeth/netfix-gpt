@@ -2,6 +2,8 @@ import React,{useRef, useState} from 'react'
 import Header from './Header'
 import bg from '../images/ne3-bg.jpeg';
 import { checkValidation } from '../utils/Validation';
+import { signInWithEmailAndPassword ,createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../utils/firebase';
 const Login = () => {
     const email = useRef(null);
     const password = useRef(null);
@@ -15,13 +17,45 @@ const Login = () => {
     }
 
    const handleClick=()=>{
-      console.log(email.current.value);
-      console.log(password.current.value)
+
       const nameValue = login ? undefined : (name.current ? name.current.value : "");
-      console.log(nameValue);
 
       let validationMsg = checkValidation(nameValue,email.current.value,password.current.value);
       setValidationMessage(validationMsg)
+
+     if(validationMsg)return;
+    
+      if(!login){
+        createUserWithEmailAndPassword(auth,email.current.value,password.current.value)
+        .then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          console.log(user);
+          console.log("Sucessfully signed in");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(`ERROR CODE :${errorCode}  ERROR MSG: ${errorMessage}`)
+         
+        });
+      }else{
+        signInWithEmailAndPassword(auth, email.current.value,password.current.value)
+        .then((userCredential) => {
+          // Login 
+          const user = userCredential.user;
+          console.log(user);
+          console.log("Sucessfully loggedIn");
+  
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(`ERROR CODE :${errorCode}  ERROR MSG: ${errorMessage}`)
+          setValidationMessage("Invalid Credentials") 
+        });
+      }
+
    } 
 
   return (
