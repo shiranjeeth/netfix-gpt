@@ -10,3 +10,12 @@
 - useRef hook 
 - fireBase Setup
 - Deploying our app to prodution
+- install redux
+- create store
+- create slice
+- provide the store in app.js
+- go to firebase docs and navigate to manage users 
+- there find onAuthStateChanged
+- When a user logs in or out, we can retrieve the user details and add them to the Redux store via the onAuthStateChanged method
+- onAuthStateChanged should only be called once when the user signs in or signs out.
+- The state should only be updated once, so wrap the details inside a useEffect with an empty dependency array ([])

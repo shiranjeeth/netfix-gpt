@@ -4,7 +4,9 @@ import bg from '../images/ne3-bg.jpeg';
 import { checkValidation } from '../utils/Validation';
 import { signInWithEmailAndPassword ,createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../utils/firebase';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
+  const navigate = useNavigate(); // add this to navigate the user
     const email = useRef(null);
     const password = useRef(null);
     const name = useRef(null)
@@ -30,8 +32,9 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up 
           const user = userCredential.user;
+          navigate("/browse");
           console.log(user);
-          console.log("Sucessfully signed in");
+          console.log("Sucessfully signed in"); // if user sucessfully logged in navigate to browse
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -44,6 +47,7 @@ const Login = () => {
         .then((userCredential) => {
           // Login 
           const user = userCredential.user;
+          navigate("/browse");  // if user sucessfully signin navigate to browse
           console.log(user);
           console.log("Sucessfully loggedIn");
   
