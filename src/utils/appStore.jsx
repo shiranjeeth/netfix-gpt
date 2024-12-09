@@ -4,7 +4,7 @@ import userReducer from "./Slices/userSlice.jsx";
 const appStore = configureStore(
     {
         reducer : {
-          users : userReducer
+          user : userReducer
         }
     }
 )

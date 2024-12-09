@@ -3,9 +3,13 @@ import Header from './Header'
 import bg from '../images/ne3-bg.jpeg';
 import { checkValidation } from '../utils/Validation';
 import { signInWithEmailAndPassword ,createUserWithEmailAndPassword } from "firebase/auth";
+import {  updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/Slices/userSlice';
 const Login = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate(); // add this to navigate the user
     const email = useRef(null);
     const password = useRef(null);
@@ -32,9 +36,30 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up 
           const user = userCredential.user;
+
+          // update profile with username
+          updateProfile(auth.currentUser, {
+            displayName: name.current.value,
+          }).then(() => {  
+
+            // save the updated Value in redux store here even using the useDispatch
+           const {uid , email  , displayName} = auth.currentUser
+            dispatch(
+              addUser({
+                uid : uid,
+                 email : email ,
+                  displayName : displayName
+              })
+            ) 
+
+
           navigate("/browse");
           console.log(user);
-          console.log("Sucessfully signed in"); // if user sucessfully logged in navigate to browse
+          console.log("Sucessfully signed in"); 
+          
+          }).catch((error) => {
+            console.log(error);
+          });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -63,8 +88,8 @@ const Login = () => {
    } 
 
   return (
+   
     <div> 
-        <Header />
         {/* background image set to login page */}
         <div className='overflow-hidden w-full h-screen'> 
       <img src={bg} alt="Netflix Background" className="w-full h-full object-cover object-center" />
@@ -95,6 +120,7 @@ const Login = () => {
       </form>
 
     </div>
+    
   )
 }
 
