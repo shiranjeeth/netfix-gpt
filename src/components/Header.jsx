@@ -1,35 +1,65 @@
 import React,{useEffect,useState} from 'react'
 import logo from '../images/logo.png';
 import userIcon from '../images/user-icon.png';
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {removeUser}  from '../utils/Slices/userSlice';
+import { addUser } from '../utils/Slices/userSlice';
 
 
 const Header = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [currentUser, setCurrentUser] = useState(null);
   const [loading,setLoading] = useState(true)
 
 
-  /// on inital pageload get the userDetails if user details are not there show the loading screen
+  // /// on inital pageload get the userDetails if user details are not there show the loading screen
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+  //     if (currentUser) {
+  //       setCurrentUser(currentUser); // User is signed in
+  //     } else {
+  //       setCurrentUser(null); // No user is signed in
+  //     }
+  //     setLoading(false)
+  //   });
+
+  //   // Clean up listener on component unmount
+  //   return () => unsubscribe();
+  // }, []);
+
+ // functionality to save the user details in the redux store
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      if (currentUser) {
-        setCurrentUser(currentUser); // User is signed in
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        console.log("user logged from header")
+        setCurrentUser(user);
+        navigate("/browse");
       } else {
-        setCurrentUser(null); // No user is signed in
+        dispatch(removeUser());
+        setCurrentUser(user);
+        navigate("/");
       }
       setLoading(false)
     });
 
-    // Clean up listener on component unmount
+    // Unsiubscribe when component unmounts
     return () => unsubscribe();
   }, []);
 
-
+    
   // Show loading when the page is loading
   if (loading) {
     return <div>Loading...</div>; // You can replace this with a loading spinner if desired
@@ -46,13 +76,10 @@ const Header = () => {
 
 
   const userName = currentUser ? currentUser.displayName || 'Guest' : 'Guest';
-  
+
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        navigate("/");
-
-      })
+      .then(() => {  })
       .catch((error) => {
         console.error("Error signing out:", error);
         navigate("/error");

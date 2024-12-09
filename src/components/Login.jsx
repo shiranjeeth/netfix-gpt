@@ -5,19 +5,17 @@ import { checkValidation } from '../utils/Validation';
 import { signInWithEmailAndPassword ,createUserWithEmailAndPassword } from "firebase/auth";
 import {  updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/Slices/userSlice';
 const Login = () => {
   const dispatch = useDispatch()
-  const navigate = useNavigate(); // add this to navigate the user
     const email = useRef(null);
     const password = useRef(null);
     const name = useRef(null)
    const [login,setLogin] = useState(true)
    const [ValidationMessage,setValidationMessage] = useState("");
    
-
+// toggle feature of form
     const toggleSignupForm = ()=>{
         setLogin(!login)
     }
@@ -52,11 +50,6 @@ const Login = () => {
               })
             ) 
 
-
-          navigate("/browse");
-          console.log(user);
-          console.log("Sucessfully signed in"); 
-          
           }).catch((error) => {
             console.log(error);
           });
@@ -72,7 +65,6 @@ const Login = () => {
         .then((userCredential) => {
           // Login 
           const user = userCredential.user;
-          navigate("/browse");  // if user sucessfully signin navigate to browse
           console.log(user);
           console.log("Sucessfully loggedIn");
   
@@ -90,6 +82,8 @@ const Login = () => {
   return (
    
     <div> 
+       {/*  added header to make the routes secured */}
+       <Header/> 
         {/* background image set to login page */}
         <div className='overflow-hidden w-full h-screen'> 
       <img src={bg} alt="Netflix Background" className="w-full h-full object-cover object-center" />
