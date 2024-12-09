@@ -35,6 +35,10 @@
 - Add actions and reducers to the slice in order to store movies in the Redux store.
 - Fetch movie data and save it to the Redux store for later use.
 
+- A new custom hook has been added.
+- This custom hook is a regular JavaScript function that starts with the use keyword.
+- The Browser component will now appear cleaner.
+- The movie-fetching functionality will be encapsulated inside the useNowPlayingMovies hook.
 
 
 
