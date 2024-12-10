@@ -40,6 +40,17 @@
 - The Browser component will now appear cleaner.
 - The movie-fetching functionality will be encapsulated inside the useNowPlayingMovies hook.
 
+- Now we are going to build browse page
+- Create  Main container which has video and video title 
+- Secondary Container which has  movie cards and movie list
+
+
+- In the Browse component, we will implement the following functionalities:
+- The Browse page will display a trailer and multiple movie cards.
+- The main container will feature the trailer along with the movie title.
+- The secondary container will hold a dynamic number of movie cards.
+- In the main container, we will include two components: VideoBackground.jsx and VideoTitle.jsx to handle the trailer and the title display.
+
 
 
 
