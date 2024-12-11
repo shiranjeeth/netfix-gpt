@@ -52,7 +52,7 @@
 - In the main container, we will include two components: VideoBackground.jsx and VideoTitle.jsx to handle the trailer and the title display.
 
 
-
+- Now we are going to render components on Secondary conponents and display movie cards 
 
 
 
