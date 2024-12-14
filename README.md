@@ -52,7 +52,11 @@
 - In the main container, we will include two components: VideoBackground.jsx and VideoTitle.jsx to handle the trailer and the title display.
 
 
-- Now we are going to render components on Secondary conponents and display movie cards 
+- We will render components within the SecondaryContainer and display movie cards.
+- Create a MovieTitle and MovieCard component.
+- Create separate hooks to fetch popular, upcoming, and top-rated movies, and call them in Browse.jsx.
+- Pass the movie data as props from SecondaryContainer and map through the movies in MovieList.jsx.
+- In MovieCard.jsx, fetch the image CDN and load the images in the browser.
 
 
 

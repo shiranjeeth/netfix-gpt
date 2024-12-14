@@ -1,20 +1,30 @@
 import React from 'react'
-import {  useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import useMovieTrailervideo from '../Hooks/useMovieTrailervideo';
+import VideoTitle from './VideoTitle'; // Import VideoTitle
 
-const VideoBackground = ({movieID}) => {
- 
- /// fetches my trailer video
+const VideoBackground = ({movieID, title, description}) => {
+  // Fetch the trailer video
   useMovieTrailervideo({movieID});
+  const trailerVideoFromStore = useSelector((store) => store.movies?.TrailerVideo);
 
-  const trailerVideoFromStore = useSelector((store)=>store.movies?.TrailerVideo)
   return (
-<>
-<iframe width="560" height="315" src={`https://www.youtube.com/embed/${trailerVideoFromStore.key}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <div className="relative w-full h-screen">
+      {/* Video background */}
+      {trailerVideoFromStore && (
+        <iframe
+          className="absolute top-0 left-0 w-full h-full object-cover"
+          src={`https://www.youtube.com/embed/${trailerVideoFromStore.key}?&autoplay=1&mute=1`}
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
+      )}
 
+      {/* Video Title */}
+      <VideoTitle title={title} description={description} />
+    </div>
+  );
+};
 
-</>
-  )
-}
-
-export default VideoBackground
+export default VideoBackground;

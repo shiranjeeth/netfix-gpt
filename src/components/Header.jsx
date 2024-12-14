@@ -78,8 +78,11 @@ const Header = () => {
   const userName = currentUser ? currentUser.displayName || 'Guest' : 'Guest';
 
   const handleSignOut = () => {
+    console.log("signout clicked")
     signOut(auth)
-      .then(() => {  })
+      .then(() => { 
+       
+       })
       .catch((error) => {
         console.error("Error signing out:", error);
         navigate("/error");
@@ -88,26 +91,28 @@ const Header = () => {
 
   return (
     <>
-      <div className="absolute px-8 py-4 bg-gradient-to-b from-black to-gray-900 w-full flex items-center justify-between shadow-lg">
-        {/* Left aligned logo */}
-        <img className="w-44" src={logo} alt="Netflix Logo" />
-        
-        {/* Right aligned user info and signout */}
-        <div className="flex items-center space-x-6">
-          <div className="text-white text-lg font-medium">
-            <h2>Hi, {userName}</h2>
-          </div>
-          <div className="flex items-center space-x-3">
-            <img className="w-10 h-10 rounded-full border-2 border-gray-300" src={userIcon} alt="user-icon" />
-            <button
-              className="text-white bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 transition duration-300"
-              onClick={handleSignOut}
-            >
-              Sign Out
-            </button>
-          </div>
-        </div>
-      </div>
+    {(currentUser &&
+<div className="px-8 py-4 bg-gradient-to-b from-black to-gray-900 w-full flex items-center justify-between shadow-lg">
+  {/* Left aligned logo */}
+  <img className="w-44" src={logo} alt="Netflix Logo" />
+  
+  {/* Right aligned user info and signout */}
+  <div className="flex items-center space-x-6">
+    <div className="text-white text-lg font-medium">
+      <h2>Hi, {userName}</h2>
+    </div>
+    <div className="flex items-center space-x-3">
+      <img className="w-10 h-10 rounded-full border-2 border-gray-300" src={userIcon} alt="user-icon" />
+      <button
+        className="text-white bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 transition duration-300"
+        onClick={handleSignOut}
+      >
+        Sign Out
+      </button>
+    </div>
+  </div>
+</div>
+)}
     </>
   )
 }
