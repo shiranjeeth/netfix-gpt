@@ -6,9 +6,13 @@ import useTopRated from '../Hooks/useTopRated'
 import useUpcoming from '../Hooks/useUpcoming'
 import MainContainer from './MainContainer';
 import SecondaryContainer from './SecondaryContainer';
+import GptSearch from './GptSearch'
+import { useSelector } from 'react-redux'
 
 
 const Browse = () => {
+  const showGptSearch = useSelector(store => store.GptSearch.showGPTSearch);
+      // useSelector(store => store.{store reducer Key }.{slice initialState key} )
   useNowPlayingMovies();
   usePopularMovies();
   useTopRated();
@@ -17,8 +21,13 @@ const Browse = () => {
   return (
    <>
   <Header />
-  <MainContainer/>
-  <SecondaryContainer/>
+  {
+    showGptSearch ?   <GptSearch/> :
+    <>
+     <MainContainer/>
+     <SecondaryContainer/>
+    </>
+  }
    </>
   )
 }

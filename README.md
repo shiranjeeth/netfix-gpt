@@ -58,6 +58,12 @@
 - Pass the movie data as props from SecondaryContainer and map through the movies in MovieList.jsx.
 - In MovieCard.jsx, fetch the image CDN and load the images in the browser.
 
+- Gpt search feature
+- Add the button in the header to go the the netflix gpt component
+- Added toggle faeture to the button via redux store
+
+
+
 
 
 

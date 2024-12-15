@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {removeUser}  from '../utils/Slices/userSlice';
 import { addUser } from '../utils/Slices/userSlice';
+import { toggleGptsearchView } from '../utils/Slices/gptSlice';
 
 
 const Header = () => {
@@ -67,15 +68,15 @@ const Header = () => {
 
   if (currentUser) {
     // Log the current user's details for debugging
-    console.log("Current User Details:", currentUser);
+    //console.log("Current User Details:", currentUser);
     
     // Here you can check specific properties like currentUser.email or currentUser.uid if needed
   } else {
-    console.log("No user is currently signed in.");
+    //console.log("No user is currently signed in.");
   }
 
 
-  const userName = currentUser ? currentUser.displayName || 'Guest' : 'Guest';
+  const userName = currentUser ? currentUser.displayName  : 'Guest';
 
   const handleSignOut = () => {
     console.log("signout clicked")
@@ -89,6 +90,10 @@ const Header = () => {
       });
   };
 
+  const handleShowGptSearch = ()=>{
+    dispatch(toggleGptsearchView())
+  }
+
   return (
     <>
     {(currentUser &&
@@ -98,6 +103,11 @@ const Header = () => {
   
   {/* Right aligned user info and signout */}
   <div className="flex items-center space-x-6">
+  <button 
+      className='text-white bg-purple-800 px-6 py-3 rounded-md font-semibold text-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-300' onClick={handleShowGptSearch}
+    >
+      GPT Search
+    </button>
     <div className="text-white text-lg font-medium">
       <h2>Hi, {userName}</h2>
     </div>
