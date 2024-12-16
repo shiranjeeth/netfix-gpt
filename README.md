@@ -62,7 +62,9 @@
 - Add the button in the header to go the the netflix gpt component
 - Added toggle faeture to the button via redux store
 
+- create a gpt search page component to add the gpt searchbar
 
+gi
 
 
 
