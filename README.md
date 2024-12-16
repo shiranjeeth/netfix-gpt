@@ -63,9 +63,12 @@
 - Added toggle faeture to the button via redux store
 
 - create a gpt search page component to add the gpt searchbar
+- Design the page of serachGpt
 
-gi
-
-
+- Implement multi-language support on the ChatGPT search page.
+- Store the selected language in the Redux store.
+- Create a dropdown in the header to allow users to select from multiple languages.
+- Create a slice in Redux to manage language preferences across the web.
+- Retrieve the selected language from the store and pass it to the components where the language key is needed.
 
 

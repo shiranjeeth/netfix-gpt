@@ -4,10 +4,12 @@ import userIcon from '../images/user-icon.png';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {removeUser}  from '../utils/Slices/userSlice';
 import { addUser } from '../utils/Slices/userSlice';
 import { toggleGptsearchView } from '../utils/Slices/gptSlice';
+import {SUPPORTED_LANGUAGES}  from "../utils/Constants.jsx"
+import {changeLanguage}  from "../utils/Slices/configSlice.jsx"
 
 
 const Header = () => {
@@ -15,6 +17,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const [currentUser, setCurrentUser] = useState(null);
   const [loading,setLoading] = useState(true)
+  const gptPage = useSelector(store => store.GptSearch.showGPTSearch);
 
 
   // /// on inital pageload get the userDetails if user details are not there show the loading screen
@@ -93,6 +96,10 @@ const Header = () => {
   const handleShowGptSearch = ()=>{
     dispatch(toggleGptsearchView())
   }
+  const handleLanguageChange = (e)=>{
+    // console.log(e.target.value)
+     dispatch(changeLanguage(e.target.value))
+  }
 
   return (
     <>
@@ -103,10 +110,28 @@ const Header = () => {
   
   {/* Right aligned user info and signout */}
   <div className="flex items-center space-x-6">
+
+{gptPage && (
+  <select
+  className="bg-transparent border-2 border-gray-300 text-white rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-purple-600 hover:bg-gray-800 transition" onChange={handleLanguageChange}
+>
+  {SUPPORTED_LANGUAGES.map((lang) => (
+    <option
+      key={lang.identifier}
+      value={lang.identifier}
+      className="bg-black text-white hover:bg-gray-700"
+    >
+      {lang.name}
+    </option>
+  ))}
+</select>
+)
+}
+
   <button 
       className='text-white bg-purple-800 px-6 py-3 rounded-md font-semibold text-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 transition duration-300' onClick={handleShowGptSearch}
     >
-      GPT Search
+    {gptPage ? "Home" : "GPT Search"}
     </button>
     <div className="text-white text-lg font-medium">
       <h2>Hi, {userName}</h2>

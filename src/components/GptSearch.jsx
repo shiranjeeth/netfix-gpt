@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import bg from '../images/ne3-bg.jpeg';
+import {lang} from '../utils/languageConstants.jsx'
+import { useSelector } from 'react-redux';
 
 const GptSearch = () => {
   const handleGptSearchForm = (e) => {
@@ -18,6 +20,8 @@ const GptSearch = () => {
       document.documentElement.style.overflow = 'auto';
     };
   }, []);
+
+  const langKey = useSelector(store => store.config.lang)
 
   return (
     <>
@@ -39,7 +43,7 @@ const GptSearch = () => {
             onSubmit={handleGptSearchForm}
           >
             <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-              GPT Search
+            {lang[langKey]?.formHeading}
             </h2>
 
             {/* Form Row with Full Width Input and Button */}
@@ -47,13 +51,13 @@ const GptSearch = () => {
               <input
                 type="text"
                 className="w-full p-4 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-300 text-gray-800"
-                placeholder="Enter your search..."
+                placeholder={lang[langKey]?.gptSearchPlaceHolder}
               />
               <button
                 type="submit"
                 className="py-4 px-8 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 transition"
               >
-                Submit
+            {lang[langKey]?.search}
               </button>
             </div>
           </form>
